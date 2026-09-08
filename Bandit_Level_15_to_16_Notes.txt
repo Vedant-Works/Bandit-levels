@@ -1,0 +1,74 @@
+OverTheWire Bandit – Level 15 to Level 16
+Simple Notes
+
+In Bandit Level 15 to Level 16, we learn how to connect to a network service using SSL/TLS encryption. The password for the next level can be retrieved by submitting the current password to port 30001 on localhost using an encrypted connection. This is the goal given by the official OverTheWire Bandit level. citeturn0search0
+
+After completing Level 14, we are logged in as bandit15.
+
+The new command we learn in this level is openssl, specifically the s_client option.
+
+Command:
+openssl s_client -connect localhost:30001
+
+openssl is a command-line tool that can work with SSL/TLS connections and certificates.
+
+In this level, we use it to create a secure connection to the service running on port 30001.
+
+s_client
+s_client is an OpenSSL tool used to connect to an SSL/TLS server. It is useful for testing and communicating with services that require an encrypted connection.
+
+-connect
+Tells s_client which server and port to connect to.
+
+localhost:30001
+Means we are connecting to port 30001 on the local machine.
+
+After running the command, OpenSSL will establish the SSL/TLS connection. It may display information about the connection and certificate.
+
+Once the connection is ready, enter the current Bandit password and press Enter.
+
+The service will check the password and return the password for Level 16 if it is correct.
+
+The easiest method to remember for this level is:
+
+openssl s_client -connect localhost:30001
+
+Then enter the current Level 15 password when the connection is ready.
+
+You may see a lot of connection or certificate information before the input area. That is normal. The important part is that the connection to port 30001 is using SSL/TLS.
+
+After getting the password, we can use it to log in to Level 16.
+
+Command to connect to Level 16:
+
+ssh bandit16@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+openssl
+A command-line tool used for working with SSL/TLS, certificates, and cryptographic operations.
+
+s_client
+An OpenSSL tool used to connect to an SSL/TLS service from the command line.
+
+-connect
+Specifies the host and port that the SSL/TLS client should connect to.
+
+SSL/TLS
+A security protocol used to encrypt communication between a client and a server. In this level, the password is sent through an encrypted connection.
+
+The main thing I learned from this level is that a normal network connection and an SSL/TLS connection are not the same. The service on port 30001 requires an encrypted connection, so we use openssl s_client instead of a normal netcat connection.
+
+The basic flow of Level 15 to Level 16 is:
+
+1. Log in as bandit15.
+2. Connect to localhost on port 30001 using openssl s_client.
+3. Wait for the SSL/TLS connection to be established.
+4. Enter the current Level 15 password.
+5. The service checks the password.
+6. Receive the password for Level 16.
+7. Use that password to log in as bandit16.
+
+This level teaches an important networking concept: some services require encrypted communication. When a service uses SSL/TLS, we need a client that understands that protocol, such as OpenSSL's s_client.
+
+Source: Official OverTheWire Bandit Level 15 → Level 16 page. citeturn0search0

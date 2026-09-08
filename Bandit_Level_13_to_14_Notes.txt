@@ -1,0 +1,85 @@
+OverTheWire Bandit – Level 13 to Level 14
+Simple Notes
+
+In Bandit Level 13 to Level 14, we learn how to use an SSH private key to log in to another account. The goal is to log in to bandit14 using the private key stored in the file sshkey.private.
+
+After completing Level 12, we are logged in as bandit13.
+
+The important new concept in this level is using an SSH private key for authentication.
+
+The private key is stored in:
+
+sshkey.private
+
+We can use this key instead of entering the normal Bandit password.
+
+Command:
+ssh -i sshkey.private bandit14@localhost
+
+The -i option tells ssh which private key file should be used for authentication.
+
+sshkey.private
+This is the private SSH key provided by the level. It allows us to authenticate as bandit14.
+
+bandit14@localhost
+This tells SSH to connect to the local machine as the user bandit14.
+
+localhost
+Means the same machine we are currently connected to.
+
+The command uses the private key from the current directory to authenticate as bandit14.
+
+If the key has permission problems, SSH may refuse to use it because private keys should not be accessible to other users.
+
+In that case, we can restrict the permissions of the key:
+
+Command:
+chmod 600 sshkey.private
+
+chmod is used to change the permissions of a file.
+
+600 means:
+- The owner can read and write the file.
+- The group has no permissions.
+- Other users have no permissions.
+
+After changing the permissions, we can try the SSH command again:
+
+ssh -i sshkey.private bandit14@localhost
+
+Once the login succeeds, we are connected as bandit14.
+
+The password for Level 14 is not obtained by reading sshkey.private. The purpose of this level is to use the private key to log in as bandit14.
+
+New commands and concepts learned in this level:
+
+ssh -i
+The -i option tells SSH to use a specific private key file for authentication.
+
+Private SSH key
+A private key is a secret authentication file that can be used instead of a password when connecting through SSH. It should be kept secure.
+
+localhost
+Refers to the local machine, meaning the computer or server we are currently working on.
+
+chmod
+Used to change the permissions of files and directories.
+
+chmod 600
+Gives the owner read and write permissions while removing permissions for the group and everyone else.
+
+The main thing I learned from this level is that SSH does not always require a password. It can also use a private key for authentication. File permissions are also important because SSH expects private keys to be protected from other users.
+
+The basic flow of Level 13 to Level 14 is:
+
+1. Log in as bandit13.
+2. Locate the sshkey.private file.
+3. Use SSH with the -i option.
+4. Connect to bandit14 on localhost.
+5. If necessary, use chmod 600 to protect the private key.
+6. Run the SSH command again.
+7. Successfully log in as bandit14.
+
+This level teaches an important cybersecurity concept: private keys are credentials, just like passwords, and they must be protected with proper file permissions.
+
+Source: Official OverTheWire Bandit Level 13 → Level 14 page.

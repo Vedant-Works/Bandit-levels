@@ -1,0 +1,69 @@
+OverTheWire Bandit – Level 14 to Level 15
+Simple Notes
+
+In Bandit Level 14 to Level 15, we learn how to send the current level's password to a service running on a specific port. The password for Level 15 can be submitted to localhost on port 30000.
+
+After completing Level 13, we are logged in as bandit14.
+
+The new command we learn in this level is nc.
+
+Command:
+nc localhost 30000
+
+nc stands for netcat. It is a command-line tool used to create connections to network services.
+
+localhost
+Means the service is running on the same machine we are currently using.
+
+30000
+This is the port number where the Bandit service is listening.
+
+After running the command, the terminal waits for us to enter something. We enter the current Bandit password and press Enter.
+
+The service checks the password. If it is correct, it returns the password for Level 15.
+
+A simple way to do this is:
+
+Command:
+nc localhost 30000
+
+Then enter the password from Level 14 when the connection is waiting for input.
+
+We can also send the password directly to nc using a pipe:
+
+Command:
+cat /etc/bandit_pass/bandit14 | nc localhost 30000
+
+This sends the Level 14 password directly to the service running on port 30000.
+
+The easiest method to remember for this level is:
+
+nc localhost 30000
+
+Then enter the current password when the connection is ready.
+
+New commands and concepts learned in this level:
+
+nc
+Also called netcat. It is used to create network connections and communicate with services using TCP or other network protocols.
+
+localhost
+Refers to the local machine. In this level, the Bandit service is running on the same server.
+
+Port
+A port is a numbered endpoint used by network services. In this level, port 30000 is the endpoint where we send the password.
+
+The main thing I learned from this level is that we can communicate with network services directly from the Linux terminal. The nc command allows us to connect to a service running on a specific host and port and send data to it.
+
+The basic flow of Level 14 to Level 15 is:
+
+1. Log in as bandit14.
+2. Use nc to connect to localhost on port 30000.
+3. Enter the current Level 14 password.
+4. The service checks the password.
+5. If the password is correct, it returns the password for Level 15.
+6. Use that password for the next level.
+
+This level teaches an important networking concept: services listen on ports, and tools such as netcat can be used to connect to those services and exchange data.
+
+Source: Official OverTheWire Bandit Level 14 → Level 15 page.

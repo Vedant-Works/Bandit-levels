@@ -1,0 +1,62 @@
+OverTheWire Bandit – Level 17 to Level 18
+Simple Notes
+
+In Bandit Level 17 to Level 18, we learn how to compare two files and find the line that is different between them. The files passwords.old and passwords.new are provided, and the password for the next level is the line that has changed.
+
+After completing Level 16, we are logged in as bandit17.
+
+The new command we learn in this level is diff.
+
+Command:
+diff passwords.old passwords.new
+
+diff is used to compare two files and show the differences between them.
+
+In this level:
+
+passwords.old
+Contains the old list of passwords.
+
+passwords.new
+Contains the new list of passwords.
+
+The command compares both files and shows the line that is different.
+
+The output will identify the changed line. That line is the password for Level 18.
+
+A simple way to solve the level is:
+
+Command:
+diff passwords.old passwords.new
+
+The output will contain a line that is different between the two files.
+
+The password is the new line shown in the difference.
+
+After getting the password, we can use it to log in to Level 18.
+
+Command to connect to Level 18:
+
+ssh bandit18@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+diff
+Used to compare two files and show the differences between them.
+
+File comparison
+Comparing files is useful when we have an old version and a new version and want to find what changed between them.
+
+The main thing I learned from this level is that diff can quickly show the differences between two files. Instead of checking both files manually, we can let Linux compare them and show us the changed line.
+
+The basic flow of Level 17 to Level 18 is:
+
+1. Log in as bandit17.
+2. Use diff to compare passwords.old and passwords.new.
+3. Look at the difference shown by diff.
+4. Find the new or changed password.
+5. Use that password to log in as bandit18.
+
+This level teaches a useful Linux habit: when two files are almost identical, use diff instead of manually checking every line.
+
+Source: Official OverTheWire Bandit Level 17 → Level 18 page.

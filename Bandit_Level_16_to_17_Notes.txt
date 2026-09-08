@@ -1,0 +1,82 @@
+OverTheWire Bandit – Level 16 to Level 17
+Simple Notes
+
+In Bandit Level 16 to Level 17, we learn how to find which ports are open on a server and then identify which one is running an SSL/TLS service. The goal is to find the correct port in the range 31000 to 32000, connect to it using SSL/TLS, and receive an SSH private key.
+
+After completing Level 15, we are logged in as bandit16.
+
+The new command we learn in this level is nmap.
+
+Command:
+nmap -sV -p 31000-32000 localhost
+
+nmap is used to scan a computer or server and find open network ports.
+
+-p 31000-32000
+Tells nmap to scan all ports from 31000 through 32000.
+
+-sV
+Tells nmap to try to identify the service and version running on each open port.
+
+localhost
+Means we are scanning the local machine.
+
+The scan will show several open ports. We need to look for the port that is running an SSL/TLS service and accepts the correct connection.
+
+Once we find the possible SSL/TLS port, we can connect to it using the openssl s_client command we learned in the previous level.
+
+Command:
+openssl s_client -connect localhost:PORT
+
+Replace PORT with the port number found by the nmap scan.
+
+For example, if the correct port were 31500, the command would be:
+
+openssl s_client -connect localhost:31500
+
+The correct service will return an SSH private key after we send the current Level 16 password.
+
+Some open ports may accept a connection but return something different. The important thing is to test the ports identified by nmap and find the service that gives us the private key.
+
+After receiving the private key, save it into a file such as:
+
+bandit17.key
+
+Then we can use the private key to connect as bandit17.
+
+Command:
+ssh -i bandit17.key bandit17@localhost
+
+The private key is the credential needed to access Level 17.
+
+New commands and concepts learned in this level:
+
+nmap
+Used to scan a host and find open network ports.
+
+nmap -p
+Specifies which port or range of ports should be scanned.
+
+nmap -sV
+Attempts to identify the service and version running on open ports.
+
+Port scanning
+The process of checking network ports to find which services are listening for connections.
+
+The main thing I learned from this level is that a network service may be running on an unknown port. Instead of guessing the port, nmap can scan a range of ports and help us identify which services are available.
+
+The basic flow of Level 16 to Level 17 is:
+
+1. Log in as bandit16.
+2. Scan ports 31000 through 32000 using nmap.
+3. Look at the services running on the open ports.
+4. Find the port that provides an SSL/TLS service.
+5. Connect to that port using openssl s_client.
+6. Send the current Level 16 password.
+7. Receive the SSH private key.
+8. Save the private key into a file.
+9. Use the private key to connect as bandit17.
+
+This level teaches an important networking concept: ports are used by network services, and port scanning can help us discover which services are available. It also combines network scanning with SSL/TLS and SSH private-key authentication.
+
+Source: Official OverTheWire Bandit Level 16 → Level 17 page.

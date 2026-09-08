@@ -1,0 +1,72 @@
+OverTheWire Bandit – Level 18 to Level 19
+Simple Notes
+
+In Bandit Level 18 to Level 19, we learn how to work with an SSH login where the shell immediately logs us out. The password for the next level is stored in a file called readme in the home directory. The problem is that the .bashrc file has been modified to log us out when we connect normally. This is the goal given by the official OverTheWire Bandit level.
+
+After completing Level 17, we have the password needed to connect as bandit18.
+
+If we try to log in normally:
+
+Command:
+ssh bandit18@bandit.labs.overthewire.org -p 2220
+
+The connection is accepted, but we are immediately logged out with a message such as:
+
+Byebye!
+
+This happens because the shell configuration has been modified to log us out.
+
+The new concept we learn in this level is executing a command directly through SSH instead of starting the normal interactive shell.
+
+Command:
+ssh bandit18@bandit.labs.overthewire.org -p 2220 cat readme
+
+SSH normally starts a shell after connecting. However, if we put a command at the end of the SSH command, SSH can execute that command on the remote server instead.
+
+In this case:
+
+cat readme
+
+is executed on the Bandit server before the modified shell can log us out.
+
+The command reads the contents of the readme file, which contains the password for Level 19.
+
+This is useful because we do not actually need to get an interactive shell. We only need to execute the command that reads the password.
+
+We can also use:
+
+Command:
+ssh bandit18@bandit.labs.overthewire.org -p 2220 "cat readme"
+
+The quotes make it clear that cat readme is the command we want SSH to execute remotely.
+
+The important idea is that the command after the SSH connection details runs on the remote machine.
+
+After getting the password, we can use it to log in to Level 19.
+
+Command to connect to Level 19:
+
+ssh bandit19@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+Remote command execution with SSH
+SSH can execute a command directly on the remote server instead of opening an interactive shell.
+
+ssh host command
+When a command is placed after the SSH connection information, SSH runs that command on the remote machine.
+
+The main thing I learned from this level is that SSH does not always have to give us an interactive terminal. We can use SSH to run a specific command remotely. This is useful when the normal shell is broken, restricted, or immediately logs us out.
+
+The basic flow of Level 18 to Level 19 is:
+
+1. Connect to bandit18 normally and notice that the shell logs us out.
+2. Understand that .bashrc is causing the logout.
+3. Use SSH to execute a command directly on the remote machine.
+4. Run cat readme through SSH.
+5. Read the password returned by the command.
+6. Use that password to log in as bandit19.
+
+This level teaches an important Linux and SSH concept: when an interactive shell is not available, we can still execute individual commands remotely through SSH.
+
+Source: Official OverTheWire Bandit Level 18 → Level 19 page.
