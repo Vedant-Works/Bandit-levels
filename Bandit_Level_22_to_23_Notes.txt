@@ -1,0 +1,109 @@
+OverTheWire Bandit – Level 22 to Level 23
+Simple Notes
+
+In Bandit Level 22 to Level 23, we learn more about cron jobs and how to understand a shell script that uses variables to create a temporary filename. The password for the next level is stored in a file, but the cron job creates the filename using a hash.
+
+After completing Level 21, we have the password needed to connect as bandit22.
+
+First, we can look at the cron jobs:
+
+Command:
+ls -la /etc/cron.d/
+
+We can find the cron job related to bandit23.
+
+Then we can read its configuration:
+
+Command:
+cat /etc/cron.d/cronjob_bandit23
+
+This shows which script is being executed by the cron job.
+
+The script is located at:
+
+/usr/bin/cronjob_bandit23.sh
+
+We can read the script with:
+
+Command:
+cat /usr/bin/cronjob_bandit23.sh
+
+The important thing in this script is that it uses variables and the md5sum command to create the name of a temporary file.
+
+The script contains something similar to:
+
+myname=$(whoami)
+
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+The first command gets the username of the user running the script.
+
+The second command creates an MD5 hash from the text and uses that hash as part of the filename.
+
+We can run the commands ourselves to find out what filename the script creates.
+
+Command:
+whoami
+
+The whoami command tells us which user we are currently logged in as.
+
+In this level, the important thing is that the cron job runs as bandit23, not as bandit22. Therefore, when the script runs, the value of whoami is bandit23.
+
+We can calculate the same filename with:
+
+Command:
+echo I am user bandit23 | md5sum
+
+This gives us an MD5 hash.
+
+The script then uses cut to take only the hash part:
+
+Command:
+echo I am user bandit23 | md5sum | cut -d ' ' -f 1
+
+The -d option tells cut which delimiter to use. Here, the delimiter is a space. The -f 1 option selects the first field.
+
+Once we know the filename, we can read the file created by the cron job:
+
+Command:
+cat /tmp/<hash>
+
+The file contains the password for bandit23.
+
+New commands and concepts learned in this level:
+
+whoami
+Shows the username of the current user. It is useful when we need to know which user a script is running as.
+
+md5sum
+Creates an MD5 checksum or hash from input. In this level, it is used to generate a predictable filename.
+
+cut
+Used to remove parts of text and select specific fields from a line.
+
+cut -d ' ' -f 1
+Uses a space as the delimiter and selects the first field from the output.
+
+$(command)
+This is command substitution. It runs a command and puts its output into another command or variable.
+
+Variables
+Variables store values that can be used later in a script. In this level, the script uses a variable for the username and another variable for the generated filename.
+
+The main thing I learned from this level is that we should read and understand scripts instead of just running them. Even when a filename looks random because it is created using a hash, we can reproduce the same commands and calculate exactly what the filename will be.
+
+The basic flow of Level 22 to Level 23 is:
+
+1. Log in as bandit22.
+2. Find the cron job for bandit23.
+3. Read the cron job configuration.
+4. Find and read the script being executed.
+5. Notice that the script uses whoami, md5sum, and cut.
+6. Understand that the script runs as bandit23.
+7. Recreate the commands with bandit23 as the username.
+8. Calculate the hash and find the temporary filename.
+9. Use cat to read the file and get the password for bandit23.
+
+This level teaches an important Linux scripting concept: variables and command substitution can be used to build filenames dynamically, and we can understand the result by following the commands used inside the script.
+
+Source: Official OverTheWire Bandit Level 22 → Level 23 page.

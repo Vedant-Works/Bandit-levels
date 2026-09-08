@@ -1,0 +1,69 @@
+OverTheWire Bandit – Level 21 to Level 22
+Simple Notes
+
+In Bandit Level 21 to Level 22, we learn how to find and understand scheduled jobs in Linux. The password for the next level is being handled by a cron job. Our job is to find the cron configuration and understand what script is being executed.
+
+After completing Level 20, we have the password needed to connect as bandit21.
+
+First, we can look at the cron configuration:
+
+Command:
+ls -la /etc/cron.d/
+
+This shows the scheduled cron jobs that are configured on the system. We need to find the job related to bandit22.
+
+We can read the cron file:
+
+Command:
+cat /etc/cron.d/cronjob_bandit22
+
+The file shows that a command is being run automatically for the bandit22 user. It also tells us which script is being executed.
+
+The script is located in:
+
+/usr/bin/cronjob_bandit22.sh
+
+We can read the script with:
+
+Command:
+cat /usr/bin/cronjob_bandit22.sh
+
+The script creates a temporary file and puts the password for bandit22 into that file. It also gives the file the correct permissions so that we can read it.
+
+The important part is that the cron job runs the script automatically. We do not need to run the script ourselves. We just need to find the temporary file created by the script and read its contents.
+
+The script shows the location of the temporary file. We can then use cat to read that file and get the password for bandit22.
+
+New commands and concepts learned in this level:
+
+ls -la /etc/cron.d/
+Lists the cron job configuration files. The /etc/cron.d/ directory contains files that define scheduled jobs.
+
+cat /etc/cron.d/cronjob_bandit22
+Reads the cron job configuration and lets us see which command or script is being run.
+
+cat /usr/bin/cronjob_bandit22.sh
+Reads the contents of the shell script used by the cron job. This helps us understand what the scheduled job actually does.
+
+Cron
+Cron is a Linux service used to run commands or scripts automatically at scheduled times. A cron job can run repeatedly without a user having to start it manually.
+
+Cron job
+A cron job is a scheduled task. In this level, the cron job runs a script that creates a file containing the password for bandit22.
+
+The main thing I learned from this level is that Linux can automatically run commands using cron. When we find a cron job, we can read its configuration and then inspect the script it runs to understand what is happening.
+
+The basic flow of Level 21 to Level 22 is:
+
+1. Log in as bandit21.
+2. Look inside /etc/cron.d/.
+3. Find the cron job related to bandit22.
+4. Read the cron job configuration.
+5. Find the script that the cron job runs.
+6. Read the script to understand what it does.
+7. Find the temporary file created by the script.
+8. Read the file to get the password for bandit22.
+
+This level teaches an important Linux concept: cron can be used to automatically run scripts at scheduled times, and checking cron jobs can help us understand what processes are running in the background.
+
+Source: Official OverTheWire Bandit Level 21 → Level 22 page.

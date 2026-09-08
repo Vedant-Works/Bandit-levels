@@ -1,0 +1,82 @@
+OverTheWire Bandit – Level 19 to Level 20
+Simple Notes
+
+In Bandit Level 19 to Level 20, we learn how to use a special program that is owned by bandit20 and has the setuid permission enabled. The program is called bandit20-do. It can be used to run commands as the bandit20 user. The goal is to use this program to read the password for the next level.
+
+After completing Level 18, we have the password needed to connect as bandit19.
+
+First, we can list the files in the home directory:
+
+Command:
+ls -la
+
+We can see a file/program called bandit20-do. This is the new program we need to understand.
+
+The important concept in this level is setuid. Setuid allows a program to run with the permissions of the file owner instead of the user who runs it.
+
+We can check the permissions of bandit20-do with:
+
+Command:
+ls -l bandit20-do
+
+The permissions show an s where the normal execute permission would be. This tells us that the setuid bit is enabled.
+
+The bandit20-do program is owned by bandit20, so when we use it, the command can be executed with bandit20's permissions.
+
+We can see how the program works by running:
+
+Command:
+./bandit20-do
+
+It shows that we can use it to execute a command as another user.
+
+The basic format is:
+
+Command:
+./bandit20-do command
+
+For example, we can run:
+
+Command:
+./bandit20-do id
+
+The id command shows information about the current user and groups. When it is run through bandit20-do, we can see that the command is running with the permissions of bandit20.
+
+The main trick is to use bandit20-do to read the password file for bandit20.
+
+Command:
+./bandit20-do cat /etc/bandit_pass/bandit20
+
+Here, cat reads the password file, while bandit20-do gives the command the permissions needed to read it.
+
+The password printed by this command is the password we need for Level 20.
+
+New commands and concepts learned in this level:
+
+ls -l
+Shows detailed information about files, including their permissions, owner, and group.
+
+./bandit20-do
+Runs a command using the permissions of the bandit20 user because the program has the setuid bit enabled.
+
+id
+Shows the current user ID, group ID, and group information. It is useful for checking which user a command is running as.
+
+Setuid
+Setuid is a Linux permission that allows an executable program to run with the permissions of its owner. In this level, bandit20-do is owned by bandit20, so it can run commands with bandit20's permissions.
+
+The main thing I learned from this level is that file permissions can give a program different privileges from the user who starts it. The setuid bit is especially important because it can allow a program to run with the permissions of its owner.
+
+The basic flow of Level 19 to Level 20 is:
+
+1. Log in as bandit19.
+2. Look at the files and find bandit20-do.
+3. Check its permissions with ls -l.
+4. Understand that it has the setuid permission and is owned by bandit20.
+5. Use ./bandit20-do to run a command as bandit20.
+6. Use cat to read /etc/bandit_pass/bandit20.
+7. Save the password and use it to log in to bandit20.
+
+This level teaches an important Linux security concept: a program with setuid permissions can execute commands with the privileges of its owner, so understanding file ownership and permissions is very important.
+
+Source: Official OverTheWire Bandit Level 19 → Level 20 page.

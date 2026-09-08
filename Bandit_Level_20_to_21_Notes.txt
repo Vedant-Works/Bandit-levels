@@ -1,0 +1,93 @@
+OverTheWire Bandit – Level 20 to Level 21
+Simple Notes
+
+In Bandit Level 20 to Level 21, we learn how to use a setuid program that connects to a specific port on localhost and sends the password we provide to it. The program is called suconnect. The goal is to find the correct way to use it and get the password for Level 21.
+
+After completing Level 19, we have the password needed to connect as bandit20.
+
+First, we can look at the files in the home directory:
+
+Command:
+ls -la
+
+We can see a program called suconnect. This is the new program we need to work with.
+
+We can check its permissions with:
+
+Command:
+ls -l suconnect
+
+The permissions show that the setuid bit is enabled and the program is owned by bandit21. This means suconnect can run with the permissions of bandit21.
+
+We can check what the program expects by running:
+
+Command:
+./suconnect
+
+It tells us that we need to give it a port number. The program then connects to that port on localhost.
+
+The important part of this level is that we need two connections working at the same time. One connection will listen on a port and send the password for Level 20. The suconnect program will connect to that port.
+
+To listen for a connection, we use:
+
+Command:
+nc -l 1234
+
+The nc command is Netcat. It can be used to create network connections. With -l, Netcat listens for an incoming connection on the specified port.
+
+In another terminal, we can run:
+
+Command:
+./suconnect 1234
+
+This tells suconnect to connect to port 1234 on localhost.
+
+Now we need to send the current password through the Netcat connection. When suconnect connects, we enter the password for bandit20 into the first terminal.
+
+If the password is correct, suconnect sends back the password for bandit21.
+
+The important thing is that both commands need to be running at the same time:
+
+Command:
+nc -l 1234
+
+and in another terminal:
+
+Command:
+./suconnect 1234
+
+The number 1234 is just an example of a port. It must be the same port used by both commands.
+
+New commands and concepts learned in this level:
+
+nc
+Netcat is a networking tool that can create connections between computers or processes. It can also listen for incoming connections.
+
+nc -l port
+The -l option makes Netcat listen for an incoming connection on the given port.
+
+./suconnect port
+Runs the suconnect program and tells it which localhost port it should connect to.
+
+localhost
+localhost means the same machine we are currently using. In this level, suconnect connects back to our own Bandit machine.
+
+Port
+A port is a number used to identify a network service or connection. In this level, we use a port to create a connection between nc and suconnect.
+
+The main thing I learned from this level is that two programs can communicate with each other through a network port, even when they are running on the same machine. We can use Netcat to listen for a connection and suconnect to connect to that port.
+
+The basic flow of Level 20 to Level 21 is:
+
+1. Log in as bandit20.
+2. Find the suconnect program.
+3. Check its permissions and notice that it runs with bandit21's permissions.
+4. Choose a free port, such as 1234.
+5. Use nc -l 1234 to listen on that port.
+6. In another terminal, run ./suconnect 1234.
+7. Enter the bandit20 password into the Netcat connection.
+8. suconnect checks the password and returns the password for bandit21.
+
+This level teaches an important networking concept: programs can communicate through ports, and Netcat can be used to listen for and send data through a network connection.
+
+Source: Official OverTheWire Bandit Level 20 → Level 21 page.
