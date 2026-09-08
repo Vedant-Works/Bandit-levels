@@ -1,0 +1,65 @@
+OverTheWire Bandit – Level 9 to Level 10
+Simple Notes
+
+In Bandit Level 9 to Level 10, we learn how to find readable text inside a file that contains a lot of non-readable data. The password for the next level is stored in data.txt in one of the few human-readable strings, preceded by several "=" characters. This is the goal given by the official OverTheWire Bandit level.
+
+After completing Level 8, we log in as bandit9.
+
+Command:
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 8.
+
+The main new command we learn in this level is strings.
+
+Command:
+strings data.txt
+
+strings is used to find and display readable text from a file. It is especially useful when a file contains binary or other data that is difficult to read normally.
+
+In this level, data.txt contains a lot of unreadable data, but it also contains some human-readable strings. The strings command helps us extract those readable parts.
+
+We can combine strings with grep to search for the "=" characters mentioned in the level.
+
+Command:
+strings data.txt | grep "="
+
+This shows readable strings from data.txt that contain "=".
+
+The output should contain a line similar to:
+
+====== password
+
+The exact number of "=" characters is not important. We are looking for the readable string that has several "=" characters before the password.
+
+The password shown on that line is the password for Level 10.
+
+The easiest method to remember for this level is:
+
+strings data.txt | grep "="
+
+After getting the password, we can use it to log in to Level 10.
+
+Command to connect to Level 10:
+
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+strings
+Used to extract readable text from files. It is especially useful when a file contains binary or non-readable data mixed with normal text.
+
+The main thing I learned from this level is that strings can help us find useful readable information inside files that do not contain normal text. We can then combine it with grep to search for a specific pattern.
+
+The basic flow of Level 9 to Level 10 is:
+
+1. Log in as bandit9.
+2. Use strings to extract readable text from data.txt.
+3. Use grep to look for lines containing "=".
+4. Find the readable string with several "=" characters.
+5. Take the password from that line.
+6. Use that password to log in as bandit10.
+
+This level teaches a useful Linux technique: when a file looks like it contains random or binary data, strings can help us pull out the parts that are readable instead of trying to read the whole file normally.
+
+Source: Official OverTheWire Bandit Level 9 → Level 10 page.

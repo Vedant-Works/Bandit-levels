@@ -1,0 +1,73 @@
+OverTheWire Bandit – Level 10 to Level 11
+Simple Notes
+
+In Bandit Level 10 to Level 11, we learn how to decode Base64 data. The password for the next level is stored in the file data.txt, which contains Base64 encoded data. This is the goal given by the official OverTheWire Bandit level.
+
+After completing Level 9, we log in as bandit10.
+
+Command:
+ssh bandit10@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 9.
+
+The main new command we learn in this level is base64.
+
+Command:
+base64 -d data.txt
+
+base64 is used to encode or decode data using the Base64 format.
+
+In this level, the data.txt file contains encoded text, so we need to decode it to get the original message.
+
+-d
+The -d option means "decode". It tells base64 that we want to convert the Base64 data back into its original form.
+
+So:
+
+base64 -d data.txt
+
+means:
+
+1. Use the base64 command.
+2. Decode the contents of data.txt.
+3. Print the decoded result on the screen.
+
+The output will contain a message with the password for Level 11.
+
+We do not need to manually decode the Base64 text. The base64 command does it for us.
+
+The easiest method to remember for this level is:
+
+base64 -d data.txt
+
+After getting the password, we can use it to log in to Level 11.
+
+Command to connect to Level 11:
+
+ssh bandit11@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+base64
+Used to encode or decode data using the Base64 format.
+
+-d
+Means "decode" when used with the base64 command. It converts Base64 encoded data back into its original readable form.
+
+Base64 is an encoding method, not encryption. It is mainly used to represent data using a limited set of characters, so it is easy to store or transfer as text.
+
+The main thing I learned from this level is that encoded data is not always encrypted data. If we know which encoding was used, we can often use the correct Linux command to decode it.
+
+The basic flow of Level 10 to Level 11 is:
+
+1. Log in as bandit10.
+2. Locate the data.txt file.
+3. Use base64 with the -d option.
+4. Decode the contents of data.txt.
+5. Read the decoded message.
+6. Take the password from the output.
+7. Use that password to log in as bandit11.
+
+This level teaches an important cybersecurity concept: encoding and encryption are different. Base64 does not protect information with a secret key. It simply changes the way the data is represented, and it can be decoded when we know that Base64 was used.
+
+Source: Official OverTheWire Bandit Level 10 → Level 11 page.

@@ -1,0 +1,105 @@
+OverTheWire Bandit – Level 2 to Level 3
+Simple Notes
+
+In Bandit Level 2 to Level 3, we learn how to work with file names that contain spaces. This level is simple, but it teaches an important Linux concept: spaces normally separate different arguments in a command, so a filename containing spaces needs to be handled carefully.
+
+After completing Level 1, we log in as bandit2.
+
+Command:
+ssh bandit2@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 1.
+
+Once logged in, we can check our current location using pwd.
+
+Command:
+pwd
+
+pwd means "print working directory". It tells us which directory we are currently inside.
+
+Next, we use ls to see the files.
+
+Command:
+ls
+
+We find a file with a name that contains spaces:
+
+--spaces in this filename--
+
+The spaces are important because Linux normally uses spaces to separate different parts of a command.
+
+If we try to use the filename directly like this:
+
+cat --spaces in this filename--
+
+Linux may think that "in" and "this" and "filename--" are separate arguments instead of one filename.
+
+One easy way to solve this is to put the filename inside quotes.
+
+Command:
+cat "--spaces in this filename--"
+
+The quotes tell the shell that everything inside them should be treated as one filename.
+
+Another way is to use a backslash before every space.
+
+Command:
+cat --spaces\ in\ this\ filename--
+
+The backslash tells the shell that the following space is part of the filename and should not be treated as a separator.
+
+We can also use the path to the file:
+
+cat "./--spaces in this filename--"
+
+This combines the use of "./" and quotes. "./" means the current directory.
+
+The easiest method to remember for this level is:
+
+cat "./--spaces in this filename--"
+
+The command displays the contents of the file, and the text shown is the password for Bandit Level 3.
+
+We can then use that password to log in to Level 3.
+
+Command to connect to Level 3:
+
+ssh bandit3@bandit.labs.overthewire.org -p 2220
+
+Commands and concepts learned in this level:
+
+ssh
+Used to securely connect to the remote Bandit server.
+
+pwd
+Shows the current working directory.
+
+ls
+Lists files and directories in the current directory.
+
+cat
+Displays the contents of a file.
+
+Quotes " "
+Used to tell the shell that spaces inside the quotes are part of one argument. This is useful when a filename contains spaces.
+
+Backslash Used to escape a special character. For example, writing "\ " tells the shell that the space is part of the filename.
+
+./
+Means the current directory. It can be used to specify a file located in the current directory.
+
+The main thing I learned from this level is that spaces have a special meaning in the Linux terminal. Normally, a space separates different arguments. Because the filename in this level contains spaces, we need to tell Linux that the complete name is actually one filename.
+
+The basic flow of Level 2 to Level 3 is:
+
+1. Log in as bandit2 using SSH.
+2. Use pwd to check the current directory.
+3. Use ls to see the files.
+4. Notice that the filename contains spaces.
+5. Understand that spaces normally separate command arguments.
+6. Use quotes or backslashes to handle the spaces.
+7. Use cat to read the file.
+8. The output is the password for Level 3.
+9. Use that password to log in as bandit3.
+
+This level teaches a very useful Linux habit: whenever a filename contains spaces, surround the filename with quotes or escape the spaces with backslashes. This becomes especially useful when working with files from the terminal.

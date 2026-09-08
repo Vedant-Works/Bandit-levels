@@ -1,0 +1,92 @@
+OverTheWire Bandit – Level 1 to Level 2
+Simple Notes
+
+In Bandit Level 1 to Level 2, we learn how to read a file whose name starts with a hyphen (-). This level is useful because Linux treats names beginning with "-" as options in many commands, so we have to tell the command clearly that the name is a file.
+
+After completing Level 0, we log in as bandit1.
+
+Command:
+ssh bandit1@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in the previous level.
+
+Once logged in, we can check where we are using pwd.
+
+Command:
+pwd
+
+pwd means "print working directory". It shows the current directory.
+
+Then we use ls to see the files.
+
+Command:
+ls
+
+This time, we see a file named:
+
+-
+
+The file name is just a single hyphen. This creates a small problem because "-" is normally used by Linux commands to indicate an option.
+
+For example, commands often look like this:
+
+command -option
+
+So if we simply try:
+
+cat -
+
+cat may not treat "-" as a normal filename. Instead, "-" has a special meaning for many Unix programs, often meaning standard input.
+
+To tell cat that we want to read the file named "-", we can use:
+
+cat ./-
+
+Here, "./" means the current directory. So "./-" clearly tells Linux that "-" is a file in the current directory.
+
+The command:
+
+cat ./-
+
+displays the contents of the file. The text displayed is the password for Bandit Level 2.
+
+We can then use that password to log in to Level 2.
+
+Command to connect to Level 2:
+
+ssh bandit2@bandit.labs.overthewire.org -p 2220
+
+Commands and concepts learned in this level:
+
+ssh
+Used to securely connect to the remote Bandit server.
+
+pwd
+Shows the current working directory.
+
+ls
+Lists the files and directories in the current directory.
+
+cat
+Displays the contents of a file.
+
+./
+Means the current directory. It can be used to specify a file located in the current directory.
+
+-
+A hyphen has a special meaning in many Linux commands because it is commonly used for command options. If a filename itself starts with "-", we may need to specify its path to make the command understand that it is a filename.
+
+The main thing I learned from this level is that file names can sometimes have special characters that confuse normal Linux commands. The file "-" looks simple, but directly using "cat -" does not work the way we want. Using "cat ./-" removes the confusion because "./-" clearly represents a file called "-" in the current directory.
+
+The basic flow of Level 1 to Level 2 is:
+
+1. Log in as bandit1 using SSH.
+2. Use pwd to check the current directory.
+3. Use ls to see the files.
+4. Notice that the file is named "-".
+5. Understand that "-" has a special meaning in Linux commands.
+6. Use cat ./- to read the file.
+7. The output is the password for Level 2.
+8. Use that password to log in as bandit2.
+
+This level teaches a small but important Linux trick: when a filename starts with a special character such as "-", using its path (for example, "./-") can help Linux understand that we mean the file itself and not a command option.

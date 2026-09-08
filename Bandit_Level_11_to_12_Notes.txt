@@ -1,0 +1,82 @@
+OverTheWire Bandit – Level 11 to Level 12
+Simple Notes
+
+In Bandit Level 11 to Level 12, we learn how to decode text where every letter has been rotated by 13 positions. The password for the next level is stored in data.txt, where lowercase and uppercase letters have been rotated by 13 positions. This is the goal given by the official OverTheWire Bandit level. citeturn0search0
+
+After completing Level 10, we log in as bandit11.
+
+Command:
+ssh bandit11@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 10.
+
+The main new command we learn in this level is tr.
+
+Command:
+cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+tr is used to translate or replace characters. It can change one set of characters into another set.
+
+In this level, the letters have been rotated by 13 positions. This is called ROT13.
+
+For example:
+
+A becomes N
+B becomes O
+C becomes P
+
+And the other way around:
+
+N becomes A
+O becomes B
+P becomes C
+
+The command:
+
+tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+tells tr to replace each letter with the letter that is 13 positions away.
+
+'A-Za-z'
+Represents all uppercase and lowercase English letters.
+
+'N-ZA-Mn-za-m'
+Represents the rotated alphabet used to decode the ROT13 text.
+
+Because ROT13 is its own reverse, the same character mapping can be used to decode the text.
+
+The command should print the decoded message, which contains the password for Level 12.
+
+The easiest method to remember for this level is:
+
+cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+
+After getting the password, we can use it to log in to Level 12.
+
+Command to connect to Level 12:
+
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+tr
+Used to translate or replace characters. It is useful when we need to change one set of characters into another.
+
+ROT13
+A simple letter substitution where each letter is replaced by the letter 13 positions away in the alphabet. It is an encoding method, not encryption.
+
+The main thing I learned from this level is that tr can be used to decode simple character substitutions. When we know that text uses ROT13, we can use a character mapping to turn it back into normal text.
+
+The basic flow of Level 11 to Level 12 is:
+
+1. Log in as bandit11.
+2. Read the contents of data.txt.
+3. Use tr with a ROT13 character mapping.
+4. Decode the rotated letters.
+5. Read the decoded message.
+6. Take the password from the output.
+7. Use that password to log in as bandit12.
+
+This level teaches a useful Linux and cybersecurity concept: ROT13 is not secure encryption. It is just a simple character substitution, so anyone who knows the ROT13 method can easily reverse it.
+
+Source: Official OverTheWire Bandit Level 11 → Level 12 page. citeturn0search0

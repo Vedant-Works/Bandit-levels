@@ -1,0 +1,123 @@
+OverTheWire Bandit – Level 3 to Level 4
+Simple Notes
+
+In Bandit Level 3 to Level 4, we learn how to find and read a hidden file. This level is simple, but it teaches an important Linux concept: some files are hidden and are not shown when we use the normal ls command. In Linux, hidden files usually start with a dot (.).
+
+After completing Level 2, we log in as bandit3.
+
+Command:
+ssh bandit3@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 2.
+
+Once logged in, we can check our current location using pwd.
+
+Command:
+pwd
+
+pwd means "print working directory". It tells us which directory we are currently inside.
+
+Next, we use ls to see what is in the current directory.
+
+Command:
+ls
+
+We find a directory called:
+
+inhere
+
+The password for the next level is stored in a hidden file inside this directory, so we first move into it using cd.
+
+Command:
+cd inhere
+
+cd means "change directory". It is used to move from one directory to another.
+
+Now, if we use normal ls:
+
+Command:
+ls
+
+We may not see the hidden file. This is because normal ls does not show hidden files.
+
+To see hidden files, we can use:
+
+Command:
+ls -a
+
+The -a option means "all". It tells ls to show all files, including hidden files.
+
+We should now see a file similar to:
+
+.hidden
+
+Files starting with a dot are normally treated as hidden files in Linux. The dot is not part of a special command here; it is simply the naming convention that makes the file hidden from a normal ls listing.
+
+Now we can read the hidden file using cat.
+
+Command:
+cat .hidden
+
+cat displays the contents of a file. The output shown by this command is the password for Bandit Level 4.
+
+We can also use the path to the file:
+
+Command:
+cat ./.hidden
+
+Here, ./ means the current directory. So ./.hidden means the hidden file named .hidden in the current directory.
+
+The easiest method to remember for this level is:
+
+cd inhere
+ls -a
+cat .hidden
+
+After getting the password, we can use it to log in to Level 4.
+
+Command to connect to Level 4:
+
+ssh bandit4@bandit.labs.overthewire.org -p 2220
+
+Commands and concepts learned in this level:
+
+ssh
+Used to securely connect to the remote Bandit server.
+
+pwd
+Shows the current working directory.
+
+ls
+Lists files and directories in the current directory. By default, it does not show hidden files.
+
+cd
+Means "change directory". It is used to move into another directory.
+
+ls -a
+Lists all files, including hidden files. The -a means "all".
+
+cat
+Displays the contents of a file.
+
+Hidden files
+In Linux, a file whose name starts with a dot (.) is normally hidden from a normal ls listing. Hidden does not mean the file is protected or encrypted. It mainly means it is not shown by default.
+
+./
+Means the current directory. It can be used when giving the path of a file in the current directory.
+
+The main thing I learned from this level is that not seeing a file with ls does not always mean that the file is not there. It might be hidden. Using ls -a lets us see hidden files, and then we can use cat to read the file.
+
+The basic flow of Level 3 to Level 4 is:
+
+1. Log in as bandit3 using SSH.
+2. Use pwd to check the current directory.
+3. Use ls to see the available directory.
+4. Move into the inhere directory using cd.
+5. Use ls and notice that the hidden file is not shown.
+6. Use ls -a to show hidden files.
+7. Find the .hidden file.
+8. Use cat .hidden to read it.
+9. The output is the password for Level 4.
+10. Use that password to log in as bandit4.
+
+This level teaches a useful Linux habit: if you are told that a file is hidden, do not assume it is missing. Use ls -a to check for files whose names start with a dot. This is useful when working with configuration files and other hidden files in Linux.

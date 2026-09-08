@@ -1,0 +1,98 @@
+OverTheWire Bandit – Level 6 to Level 7
+Simple Notes
+
+In Bandit Level 6 to Level 7, we learn how to search for a file when we know who owns it, which group owns it, and how large it is. The password for the next level is stored somewhere on the server. The file is owned by user bandit7, owned by group bandit6, and is 33 bytes in size. These are the conditions given by the official Bandit level. 
+
+After completing Level 5, we log in as bandit6.
+
+Command:
+ssh bandit6@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 5.
+
+We already learned how to use find in the previous level. In this level, we learn some new find conditions that let us search by file owner and group.
+
+The main command we can use is:
+
+Command:
+find / -user bandit7 -group bandit6 -size 33c 2>/dev/null
+
+This searches the whole server for a file that matches all three conditions.
+
+-user bandit7
+Tells find to look for files that are owned by the user bandit7.
+
+-group bandit6
+Tells find to look for files that are owned by the group bandit6.
+
+-size 33c
+We learned the size option in the previous level. Here, c means bytes, so this looks for a file that is exactly 33 bytes.
+
+2>/dev/null
+This is a new way of handling command output.
+
+Some directories on the server cannot be accessed by the bandit6 user. When find searches the whole / directory, it can produce many "Permission denied" messages.
+
+The 2> part redirects error messages, and /dev/null is a special location that simply throws away the output.
+
+So:
+
+2>/dev/null
+
+means that error messages are hidden from the screen. This makes the useful result much easier to see.
+
+The find command should give us a result similar to:
+
+/some/path/to/the/file
+
+The exact path is what matters. The file matching the conditions contains the password for Level 7.
+
+We can then read the file using the cat command that we learned in previous levels.
+
+Command:
+cat /path/to/the/file
+
+The output is the password for Bandit Level 7.
+
+The easiest method to remember for this level is:
+
+find / -user bandit7 -group bandit6 -size 33c 2>/dev/null
+cat /path/to/the/file
+
+After getting the password, we can use it to log in to Level 7.
+
+Command to connect to Level 7:
+
+ssh bandit7@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+-user
+Used with find to search for files owned by a specific user.
+
+-group
+Used with find to search for files owned by a specific group.
+
+2>
+Used to redirect error output from a command.
+
+2>/dev/null
+Hides error messages by sending them to /dev/null. This is useful when a command produces many errors that are not important for the result.
+
+The main thing I learned from this level is that find can search the whole system using more than just the file name. We can search using properties such as the owner, group, and file size.
+
+The basic flow of Level 6 to Level 7 is:
+
+1. Log in as bandit6.
+2. Search the whole server using find.
+3. Look for a file owned by bandit7.
+4. Make sure the group is bandit6.
+5. Make sure the file is exactly 33 bytes.
+6. Hide permission error messages using 2>/dev/null.
+7. Find the matching file.
+8. Read the file to get the password for Level 7.
+9. Use that password to log in as bandit7.
+
+This level teaches an important Linux habit: files have properties such as an owner, group, and size. When we know those properties, find can locate the correct file even when we do not know its name or location.
+
+Source: Official OverTheWire Bandit Level 6 → Level 7 page.

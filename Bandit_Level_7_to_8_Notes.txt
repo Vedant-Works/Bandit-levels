@@ -1,0 +1,59 @@
+OverTheWire Bandit – Level 7 to Level 8
+Simple Notes
+
+In Bandit Level 7 to Level 8, we learn how to search for a specific word inside a file. The password for the next level is stored in the file data.txt next to the word "millionth". The official Bandit level tells us that grep may be useful for this level.
+
+After completing Level 6, we log in as bandit7.
+
+Command:
+ssh bandit7@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 6.
+
+The main new command we learn in this level is grep.
+
+Command:
+grep millionth data.txt
+
+grep is used to search for text inside files. Instead of reading the whole file manually, we can tell grep what word we are looking for.
+
+grep millionth data.txt
+Searches the file data.txt for the word "millionth".
+
+The command should show a line similar to:
+
+millionth    password
+
+The password is the text next to the word "millionth".
+
+We can then use that password to log in to Level 8.
+
+Command to connect to Level 8:
+
+ssh bandit8@bandit.labs.overthewire.org -p 2220
+
+The easiest method to remember for this level is:
+
+grep millionth data.txt
+
+This searches data.txt for the word millionth and shows the line containing the password.
+
+New commands and concepts learned in this level:
+
+grep
+Used to search for specific text inside a file. It is useful when a file contains a lot of information and we only need the line containing a particular word or pattern.
+
+The main thing I learned from this level is that grep can quickly find specific text inside a file. Instead of opening a large file and searching manually, we can give grep a word and it will show the matching line.
+
+The basic flow of Level 7 to Level 8 is:
+
+1. Log in as bandit7.
+2. Find the data.txt file in the home directory.
+3. Use grep to search for the word millionth.
+4. Read the line returned by grep.
+5. Take the password next to millionth.
+6. Use that password to log in as bandit8.
+
+This level teaches a simple but very useful Linux habit: when you know a word that should appear in a file, use grep to find it quickly instead of checking the whole file manually.
+
+Source: Official OverTheWire Bandit Level 7 → Level 8 page.

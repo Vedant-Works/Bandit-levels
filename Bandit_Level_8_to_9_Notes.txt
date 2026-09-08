@@ -1,0 +1,89 @@
+OverTheWire Bandit – Level 8 to Level 9
+Simple Notes
+
+In Bandit Level 8 to Level 9, we learn how to find a line that appears only once in a file. The password for the next level is stored in data.txt and is the only line of text that occurs once. This is the goal given by the official OverTheWire Bandit level.
+
+After completing Level 7, we log in as bandit8.
+
+Command:
+ssh bandit8@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 7.
+
+The new commands we learn in this level are sort and uniq.
+
+Command:
+sort data.txt | uniq -u
+
+This command searches data.txt for the line that appears only once.
+
+sort
+
+sort is used to arrange lines of text in order. In this level, it is important because it puts identical lines next to each other.
+
+For example, if the same line appears many times in different places in the file, sort puts those copies together.
+
+Command:
+sort data.txt
+
+This sorts all the lines in data.txt.
+
+uniq
+
+uniq is used to work with repeated lines. It can remove or identify duplicate lines, but it works with consecutive duplicate lines.
+
+That is why we use sort before uniq. Sorting makes sure that identical lines are next to each other.
+
+uniq -u
+
+The -u option means "unique". It tells uniq to show only lines that occur exactly once.
+
+So:
+
+sort data.txt | uniq -u
+
+means:
+
+1. Sort all the lines in data.txt.
+2. Put repeated lines next to each other.
+3. Show only the line that appears exactly once.
+
+The | symbol was learned in an earlier level, so it is not a new command for this level. Here, it connects sort and uniq so that the output from sort becomes the input for uniq.
+
+The command should return one line. That line is the password for Level 9.
+
+The easiest method to remember for this level is:
+
+sort data.txt | uniq -u
+
+After getting the password, we can use it to log in to Level 9.
+
+Command to connect to Level 9:
+
+ssh bandit9@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+sort
+Arranges lines of text in order. It is useful when we need to organize a file or group identical lines together.
+
+uniq
+Checks for repeated lines and can remove or identify duplicates. It normally works with consecutive duplicate lines.
+
+uniq -u
+Shows only lines that occur exactly once.
+
+The main thing I learned from this level is that sort and uniq can be used together to find a line that appears only once in a large file. Sorting first is important because uniq checks duplicate lines that are next to each other.
+
+The basic flow of Level 8 to Level 9 is:
+
+1. Log in as bandit8.
+2. Use sort to arrange the lines in data.txt.
+3. Pass the sorted output to uniq.
+4. Use -u to show only the line that occurs once.
+5. The returned line is the password for Level 9.
+6. Use that password to log in as bandit9.
+
+This level teaches a useful Linux technique: combine small commands together to solve a problem. Instead of manually checking thousands of lines, sort and uniq can quickly identify the one line that is different from all the others.
+
+Source: Official OverTheWire Bandit Level 8 → Level 9 page.

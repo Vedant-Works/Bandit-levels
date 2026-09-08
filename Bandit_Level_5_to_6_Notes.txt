@@ -1,0 +1,126 @@
+OverTheWire Bandit – Level 5 to Level 6
+Simple Notes
+
+In Bandit Level 5 to Level 6, we learn how to find a specific file when we are given some properties about it. This level is a little more difficult because there are many files, but the conditions help us narrow down the correct one.
+
+The password for the next level is stored somewhere under the inhere directory. The file has three important properties: it is human-readable, it is exactly 1033 bytes in size, and it is not executable. These are the conditions given by the official Bandit level. citeturn0search0
+
+After completing Level 4, we log in as bandit5.
+
+Command:
+ssh bandit5@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 4.
+
+The main new command we learn in this level is find.
+
+Command:
+find
+
+find is used to search for files and directories. It becomes very useful when we know some properties of the file we are looking for but do not know its exact location or name.
+
+In this level, we can use:
+
+Command:
+find inhere -type f -size 1033c ! -executable
+
+This command searches inside the inhere directory and checks the conditions given in the level.
+
+find inhere
+Tells find to start searching from the inhere directory. It also searches inside the directories that are inside inhere.
+
+-type f
+Tells find to look only for regular files. This means directories are not included in the results.
+
+-size 1033c
+Finds files that are exactly 1033 bytes in size. The c means bytes.
+
+! -executable
+The ! means "not". This tells find to ignore files that are executable.
+
+We can make the search even more useful by checking the type of the files that match the conditions.
+
+Command:
+find inhere -type f -size 1033c ! -executable -exec file {} \; | grep ASCII
+
+Here, -exec is an option of find that allows us to run another command on every file that find discovers.
+
+-exec file {} \;
+Runs the file command on the files found by find. The {} is replaced with the name of each file. The \; tells find where the -exec part ends.
+
+The | symbol is called a pipe. It sends the output from one command to another command.
+
+grep ASCII
+grep searches for a specific piece of text. Here, it filters the output and shows the result containing the word ASCII. In this level, the human-readable file is identified as ASCII text.
+
+The result should point us to a file similar to:
+
+inhere/maybehere07/.file2
+
+The exact file name is what matters here. We can then read that file to get the password for Level 6.
+
+Command:
+cat inhere/maybehere07/.file2
+
+The output is the password for Bandit Level 6.
+
+The easiest method to remember for this level is:
+
+find inhere -type f -size 1033c ! -executable
+find inhere -type f -size 1033c ! -executable -exec file {} \; | grep ASCII
+cat inhere/maybehere07/.file2
+
+After getting the password, we can use it to log in to Level 6.
+
+Command to connect to Level 6:
+
+ssh bandit6@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+find
+Used to search for files and directories based on different conditions.
+
+-type f
+Used with find to search only for regular files.
+
+-size 1033c
+Used with find to search for files that are exactly 1033 bytes. The c means bytes.
+
+-executable
+Checks whether a file is executable. In this level, we use ! -executable to find files that are not executable.
+
+!
+Means "not" when used as part of the find condition. It can be used to reverse a condition.
+
+-exec
+Allows find to run another command on the files that it finds.
+
+{}
+Acts as a placeholder for the file name found by find.
+
+\;
+Marks the end of the -exec command.
+
+grep
+Searches text and shows lines that contain the text we are looking for.
+
+|
+The pipe sends the output of one command into another command. It is useful when we want to filter or process command output.
+
+The main thing I learned from this level is that find can save a lot of time when there are many files. Instead of checking every file manually, we can give find conditions such as the file type, size, and executable status, and it will search for files that match those conditions.
+
+The basic flow of Level 5 to Level 6 is:
+
+1. Log in as bandit5.
+2. Start searching inside the inhere directory.
+3. Use find to look only for regular files.
+4. Look for a file that is exactly 1033 bytes.
+5. Exclude executable files.
+6. Use file to check the type of the matching file.
+7. Use grep to filter for ASCII text.
+8. Find the correct file.
+9. Read the file to get the password for Level 6.
+10. Use that password to log in as bandit6.
+
+This level teaches a very useful Linux habit: when you know what a file should look like but do not know where it is, use find with multiple conditions. It is much faster and cleaner than opening files one by one.

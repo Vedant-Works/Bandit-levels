@@ -1,0 +1,79 @@
+OverTheWire Bandit – Level 0 to Level 1
+Simple Notes
+
+Bandit Level 0 is mainly an introduction to connecting to a Linux server using SSH and then finding the password needed for Level 1. The level is simple, but it teaches some basic Linux commands that are used again and again in later Bandit levels.
+
+What we learn:
+
+The first thing we learn is SSH. SSH stands for Secure Shell. It is used to connect securely to another computer/server through the terminal.
+
+Command:
+ssh bandit0@bandit.labs.overthewire.org -p 2220
+
+Here:
+- ssh = command used to make an SSH connection.
+- bandit0 = username for Level 0.
+- bandit.labs.overthewire.org = the server we are connecting to.
+- -p 2220 = tells SSH to use port 2220 instead of the default SSH port 22.
+
+When asked for the password, we enter the password given on the Bandit Level 0 page. After logging in, we are inside the Bandit Level 0 server.
+
+One important thing to remember is that when we type a password in the Linux terminal, nothing appears on the screen. There are no stars or dots. This is normal. We just type the password and press Enter.
+
+After logging in, we can use the pwd command.
+
+Command:
+pwd
+
+pwd means "print working directory". It shows the directory we are currently working in. It is useful when we are not sure where we are in the Linux file system.
+
+Next, we can use the ls command.
+
+Command:
+ls
+
+ls means "list". It shows the files and folders present in the current directory. In Level 0, we use it to check what files are available.
+
+We then find a file called readme. The next useful command is cat.
+
+Command:
+cat readme
+
+cat is used to display the contents of a file directly in the terminal. Here, cat readme shows the password stored inside the readme file.
+
+The password displayed by the readme file is the password for Bandit Level 1.
+
+So, the basic flow of Level 0 to Level 1 is:
+
+1. Connect to the Bandit server using SSH.
+2. Use pwd to check the current directory.
+3. Use ls to see the files in the directory.
+4. Find the readme file.
+5. Use cat readme to read the file.
+6. The text shown in the file is the password for Level 1.
+7. Use that password to log in as bandit1.
+
+Command to connect to Level 1:
+
+ssh bandit1@bandit.labs.overthewire.org -p 2220
+
+Commands learned in this level:
+
+ssh
+Used to securely connect to a remote server.
+
+pwd
+Shows the current working directory.
+
+ls
+Lists files and directories in the current directory.
+
+cat
+Displays the contents of a file.
+
+-p
+This is an option used with ssh to specify the port number.
+
+The main thing I learned from this level is that Linux can be controlled almost completely from the terminal. Instead of opening files by clicking on them, we can use simple commands to find and read them. I also learned how SSH works and how a username, server address and port are used to connect to a remote machine.
+
+Level 0 is basically a starting point for Bandit. It looks very easy, but it teaches the basic terminal workflow that will be needed in the upcoming levels: connect, check where you are, list files, read files, and use the information you find to move to the next level.

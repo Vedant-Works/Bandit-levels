@@ -1,0 +1,157 @@
+OverTheWire Bandit – Level 12 to Level 13
+Simple Notes
+
+In Bandit Level 12 to Level 13, we learn how to work with a file that has been repeatedly compressed. The password for the next level is stored inside data.txt, but data.txt is a hexdump of a compressed file. We need to reverse the hexdump and then identify and decompress the file several times until we reach the password. This is the goal given by the official OverTheWire Bandit level. citeturn0search0
+
+After completing Level 11, we log in as bandit12.
+
+Command:
+ssh bandit12@bandit.labs.overthewire.org -p 2220
+
+The password used here is the password we found in Level 11.
+
+For this level, it is useful to create a temporary working directory so that we do not modify the original data.txt file.
+
+The new commands we learn in this level are mktemp, xxd, file, gzip, bzip2, tar, cp, and mv.
+
+Command:
+mktemp -d
+
+mktemp -d creates a new temporary directory with a random name. It is useful when we need a safe place to work with files temporarily.
+
+We can create a temporary directory and then copy data.txt into it.
+
+Command:
+cp data.txt /tmp/some_directory/
+
+cp is used to copy a file from one location to another.
+
+Command:
+mv data.txt data.hex
+
+mv is used to move or rename a file. Here, we can use it to give the copied hexdump a more useful name.
+
+The first important step is converting the hexdump back into its original binary form.
+
+Command:
+xxd -r data.hex data
+
+xxd is used to create a hexadecimal representation of a file or convert hexadecimal data back into its original form.
+
+-r means "reverse". It tells xxd to reverse a hexdump back into binary data.
+
+After this, we can use file to find out what type of compressed file we have.
+
+Command:
+file data
+
+file checks the type of a file by looking at its contents. This is important because the file can change from gzip to bzip2 to tar as we decompress it.
+
+For example, if file tells us that the file is gzip compressed, we use gzip to decompress it.
+
+Command:
+gzip -d data
+
+gzip is used to compress and decompress files using the gzip format.
+
+-d means "decompress". It tells gzip to decompress the file.
+
+If the file is bzip2 compressed, we use:
+
+Command:
+bzip2 -d data
+
+bzip2 is another compression program. It can compress and decompress files using the bzip2 format.
+
+-d tells bzip2 to decompress the file.
+
+If file tells us that the file is a tar archive, we use:
+
+Command:
+tar -xf data
+
+tar is used to create and extract archive files.
+
+-x means "extract".
+-f tells tar which archive file to work with.
+
+After each decompression or extraction, we should run file again. The file type tells us which command to use next.
+
+This process is repeated because the file has been compressed multiple times.
+
+A useful pattern to remember is:
+
+xxd -r data.hex data
+file data
+
+Then, depending on the result:
+
+gzip -d data
+or
+bzip2 -d data
+or
+tar -xf data
+
+After extracting or decompressing a layer, use file again to identify the next format.
+
+Eventually, file will show that the remaining file is normal text. At that point, we can read the file to get the password for Level 13.
+
+The exact sequence of compression formats can change as you work through the layers, so the important thing is to use file after every step rather than guessing the next command.
+
+After getting the password, we can use it to log in to Level 13.
+
+Command to connect to Level 13:
+
+ssh bandit13@bandit.labs.overthewire.org -p 2220
+
+New commands and concepts learned in this level:
+
+mktemp
+Creates temporary files or directories. mktemp -d creates a temporary directory with a randomly generated name.
+
+cp
+Copies files from one location to another.
+
+mv
+Moves or renames files.
+
+xxd
+Works with hexadecimal representations of files. It can also convert a hexdump back into the original binary data.
+
+xxd -r
+Reverses a hexdump and converts it back into binary data.
+
+file
+Identifies the type of a file by examining its contents.
+
+gzip
+Used to compress and decompress files using the gzip format.
+
+bzip2
+Used to compress and decompress files using the bzip2 format.
+
+tar
+Used to create and extract archive files.
+
+tar -xf
+Extracts the contents of a tar archive.
+
+The main thing I learned from this level is that file extensions are not always enough to tell us what a file really is. The file command can identify the actual format, and then we can choose the correct decompression tool.
+
+The basic flow of Level 12 to Level 13 is:
+
+1. Log in as bandit12.
+2. Create a temporary working directory.
+3. Copy data.txt into the temporary directory.
+4. Rename the hexdump to make it easier to work with.
+5. Use xxd -r to convert the hexdump back into binary data.
+6. Use file to identify the file type.
+7. Decompress or extract the file using the correct command.
+8. Run file again to identify the next layer.
+9. Repeat the process until the file becomes readable text.
+10. Read the final text to get the password for Level 13.
+11. Use the password to log in as bandit13.
+
+This level teaches an important Linux skill: when working with compressed files, do not guess the format. Identify the file with file, use the correct tool to decompress it, and then check the new file again.
+
+Source: Official OverTheWire Bandit Level 12 → Level 13 page. citeturn0search0
